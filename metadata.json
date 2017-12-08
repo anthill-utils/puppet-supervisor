@@ -6,7 +6,6 @@
   "summary": "Dalenys supervisor module",
   "source": "https://github.com/desertkun/puppet-supervisor",
   "dependencies": [
-	{ "name":"dalenys-danelib", "version_requirement": ">= 1.0.0"}
   ],
   "project_page": "https://github.com/desertkun/puppet-supervisor",
   "issues_url": "https://github.com/desertkun/puppet-supervisor/issues",

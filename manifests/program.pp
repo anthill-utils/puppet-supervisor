@@ -2,6 +2,7 @@
 #
 define supervisor::program (
   $program_command,
+  $ensure                          = present,
   $program_process_name            = undef,
   $program_numprocs                = undef,
   $program_numprocs_start          = undef,
@@ -43,7 +44,7 @@ define supervisor::program (
   $supervisor_conf_dir     = $supervisor::params::supervisor_conf_dir
 
   file { "${supervisor_conf_dir}/${name}.conf":
-    ensure  => present,
+    ensure  => $ensure,
     backup  => $program_conf_backup,
     path    => "${supervisor_conf_dir}/${name}.conf",
     mode    => $program_conf_persmissions,

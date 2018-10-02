@@ -5,19 +5,10 @@
 # http://supervisord.org/configuration.html#unix-http-server-section-settings
 
 [unix_http_server]
-<% if @unix_http_server_file -%>
-file=<%= @unix_http_server_file %>
-<% end -%>
-<% if @unix_http_server_chmod -%>
-chmod=<%= @unix_http_server_chmod %>
-<% end -%>
-<% if @unix_http_server_chown -%>
-chown=<%= @unix_http_server_chown %>
-<% end -%>
-<% if @unix_http_server_username -%>
-username=<%= @unix_http_server_username %>
-<% end -%>
-<% if @unix_http_server_password -%>
-password=<%= @unix_http_server_password %>
+<% if @unix_http_server_file -%>file=<%= @unix_http_server_file %>
+<% end -%><% if @unix_http_server_chmod -%>chmod=<%= @unix_http_server_chmod %>
+<% end -%><% if @unix_http_server_chown -%>chown=<%= @unix_http_server_chown %>
+<% end -%><% if @unix_http_server_username -%>username=<%= @unix_http_server_username %>
+<% end -%><% if @unix_http_server_password -%>password=<%= @unix_http_server_password %>
 <% end -%>
 # EOF

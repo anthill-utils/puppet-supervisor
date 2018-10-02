@@ -52,5 +52,10 @@ define supervisor::program (
     require => [Package[$supervisor_package_name], File[$supervisor_conf_dir]],
     notify  => Service[$supervisor_service_name],
   }
+
+  exec { "supervisorctl restart ${name}":
+    refreshonly => true,
+    path => [ '/bin', '/usr/bin', '/usr/sbin', '/usr/local/bin' ]
+  }
 }
 # EOF

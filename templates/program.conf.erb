@@ -5,98 +5,37 @@
 # http://supervisord.org/configuration.html#program-x-section-settings
 
 [program:<%= @name -%>]
-<% if @program_command -%>
-command=<%= @program_command %>
-<% end -%>
-<% if @program_process_name -%>
-process_name=<%= @program_process_name %>
-<% end -%>
-<% if @program_numprocs -%>
-numprocs=<%= @program_numprocs %>
-<% end -%>
-<% if @program_numprocs_start %>
-numprocs_start=<%= @program_numprocs_start %>
-<% end -%>
-<% if @program_priority -%>
-priority=<%= @program_priority %>
-<% end -%>
-<% if @program_autostart -%>
-autostart=<%= @program_autostart %>
-<% end -%>
-<% if @program_autorestart -%>
-autorestart=<%= @program_autorestart %>
-<% end -%>
-<% if @program_startsecs -%>
-startsecs=<%= @program_startsecs %>
-<% end -%>
-<% if @program_startretries -%>
-startretries=<%= @program_startretries %>
-<% end -%>
-<% if @program_exitcodes -%>
-exitcodes=<%= @program_exitcodes %>
-<% end -%>
-<% if @program_stopsignal -%>
-stopsignal==<%= @program_stopsignal %>
-<% end -%>
-<% if @program_stopwaitsecs -%>
-stopwaitsecs=<%= @program_stopwaitsecs %>
-<% end -%>
-<% if @program_stopasgroup -%>
-stopasgroup=<%= @program_stopasgroup %>
-<% end -%>
-<% if @program_killasgroup -%>
-killasgroup=<%= @program_killasgroup %>
-<% end -%>
-<% if @program_user -%>
-user=<%= @program_user %>
-<% end -%>
-<% if @program_redirect_stderr -%>
-redirect_stderr=<%= @program_redirect_stderr %>
-<% end -%>
-<% if @program_stdout_logfile -%>
-stdout_logfile=<%= @program_stdout_logfile %>
-<% else -%>
-stdout_logfile=/var/log/supervisor/<%= @name -%>.log
-<% end -%>
-<% if @program_stdout_logfile_maxbytes -%>
-stdout_logfile_maxbytes=<%= @program_stdout_logfile_maxbytes %>
-<% end -%>
-<% if @program_stdout_logfile_backups -%>
-stdout_logfile_backups=<%= @program_stdout_logfile_backups %>
-<% end -%>
-<% if @program_stdout_capture_maxbytes -%>
-stdout_capture_maxbytes=<%= @program_stdout_capture_maxbytes %>
-<% end -%>
-<% if @program_stdout_events_enabled -%>
-stdout_events_enabled=<%= @program_stdout_events_enabled %>
-<% end -%>
-<% if @program_stderr_logfile -%>
-stderr_logfile=<%= @program_stderr_logfile %>
-<% else -%>
-stderr_logfile=/var/log/supervisor/<%= @name -%>.err
-<% end -%>
-<% if @program_stderr_logfile_maxbytes -%>
-stderr_logfile_maxbytes=<%= @program_stderr_logfile_maxbytes %>
-<% end -%>
-<% if @program_stderr_logfile_backups -%>
-stderr_logfile_backups=<%= @program_stderr_logfile_backups %>
-<% end -%>
-<% if @program_stderr_capture_maxbytes -%>
-stderr_capture_maxbytes=<%= @program_stderr_capture_maxbytes %>
-<% end -%>
-<% if @program_stderr_events_enabled -%>
-stderr_events_enabled=<%= @program_stderr_events_enabled %>
-<% end -%>
-<% if @program_environment -%>
-environment=<%= @program_environment %>
-<% end -%>
-<% if @program_directory -%>
-directory=<%= @program_directory %>
-<% end -%>
-<% if @program_umask -%>
-umask=<%= @program_umask %>
-<% end -%>
-<% if @program_serverurl -%>
-serverurl=<%= @program_serverurl %>
+<% if @program_command -%>command=<%= @program_command %>
+<% end -%><% if @program_process_name -%>process_name=<%= @program_process_name %>
+<% end -%><% if @program_numprocs -%>numprocs=<%= @program_numprocs %>
+<% end -%><% if @program_numprocs_start %>numprocs_start=<%= @program_numprocs_start %>
+<% end -%><% if @program_priority -%>priority=<%= @program_priority %>
+<% end -%><% if @program_autostart -%>autostart=<%= @program_autostart %>
+<% end -%><% if @program_autorestart -%>autorestart=<%= @program_autorestart %>
+<% end -%><% if @program_startsecs -%>startsecs=<%= @program_startsecs %>
+<% end -%><% if @program_startretries -%>startretries=<%= @program_startretries %>
+<% end -%><% if @program_exitcodes -%>exitcodes=<%= @program_exitcodes %>
+<% end -%><% if @program_stopsignal -%>stopsignal==<%= @program_stopsignal %>
+<% end -%><% if @program_stopwaitsecs -%>stopwaitsecs=<%= @program_stopwaitsecs %>
+<% end -%><% if @program_stopasgroup -%>stopasgroup=<%= @program_stopasgroup %>
+<% end -%><% if @program_killasgroup -%>killasgroup=<%= @program_killasgroup %>
+<% end -%><% if @program_user -%>user=<%= @program_user %>
+<% end -%><% if @program_redirect_stderr -%>redirect_stderr=<%= @program_redirect_stderr %>
+<% end -%><% if @program_stdout_logfile -%>stdout_logfile=<%= @program_stdout_logfile %>
+<% else -%>stdout_logfile=/var/log/supervisor/<%= @name -%>.log
+<% end -%><% if @program_stdout_logfile_maxbytes -%>stdout_logfile_maxbytes=<%= @program_stdout_logfile_maxbytes %>
+<% end -%><% if @program_stdout_logfile_backups -%>stdout_logfile_backups=<%= @program_stdout_logfile_backups %>
+<% end -%><% if @program_stdout_capture_maxbytes -%>stdout_capture_maxbytes=<%= @program_stdout_capture_maxbytes %>
+<% end -%><% if @program_stdout_events_enabled -%>stdout_events_enabled=<%= @program_stdout_events_enabled %>
+<% end -%><% if @program_stderr_logfile -%>stderr_logfile=<%= @program_stderr_logfile %>
+<% else -%>stderr_logfile=/var/log/supervisor/<%= @name -%>.err
+<% end -%><% if @program_stderr_logfile_maxbytes -%>stderr_logfile_maxbytes=<%= @program_stderr_logfile_maxbytes %>
+<% end -%><% if @program_stderr_logfile_backups -%>stderr_logfile_backups=<%= @program_stderr_logfile_backups %>
+<% end -%><% if @program_stderr_capture_maxbytes -%>stderr_capture_maxbytes=<%= @program_stderr_capture_maxbytes %>
+<% end -%><% if @program_stderr_events_enabled -%>stderr_events_enabled=<%= @program_stderr_events_enabled %>
+<% end -%><% if @program_environment -%>environment=<%= @program_environment %>
+<% end -%><% if @program_directory -%>directory=<%= @program_directory %>
+<% end -%><% if @program_umask -%>umask=<%= @program_umask %>
+<% end -%><% if @program_serverurl -%>serverurl=<%= @program_serverurl %>
 <% end -%>
 # EOF

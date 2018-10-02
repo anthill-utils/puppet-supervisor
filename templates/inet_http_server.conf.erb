@@ -5,13 +5,8 @@
 # http://supervisord.org/configuration.html#inet-http-server-section-settings
 
 [inet_http_server]
-<% if @inet_http_server_port -%>
-port=<%= @inet_http_server_port %>
-<% end -%>
-<% if @inet_http_server_username -%>
-username=<%= @inet_http_server_username %>
-<% end -%>
-<% if @inet_http_server_password -%>
-password=<%= @inet_http_server_password %>
+<% if @inet_http_server_port -%>port=<%= @inet_http_server_port %>
+<% end -%><% if @inet_http_server_username -%>username=<%= @inet_http_server_username %>
+<% end -%><% if @inet_http_server_password -%>password=<%= @inet_http_server_password %>
 <% end -%>
 # EOF

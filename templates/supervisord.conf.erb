@@ -5,52 +5,36 @@
 # http://supervisord.org/configuration.html#supervisord-section-settings
 
 [supervisord]
-<% if @supervisord_logfile -%>
-logfile=<%= @supervisord_logfile %>
-<% end -%>
-<% if @supervisord_logfile_maxbytes -%>
-logfile_maxbytes=<%= @supervisord_logfile_maxbytes %>
-<% end -%>
-<% if @supervisord_logfile_backups -%>
-logfile_backups=<%= @supervisord_logfile_backups %>
-<% end -%>
-<% if @supervisord_loglevel -%>
-loglevel=<%= @supervisord_loglevel %>
-<% end -%>
-<% if @supervisord_pidfile -%>
-pidfile=<%= @supervisord_pidfile %>
-<% end -%>
-<% if @supervisord_umask -%>
-umask=<%= @supervisord_umask %>
-<% end -%>
-<% if @supervisord_nodaemon -%>
-nodaemon=<%= @supervisord_nodaemon %>
-<% end -%>
-<% if @supervisord_minfds -%>
-minfds=<%= @supervisord_minfds %>
-<% end -%>
-<% if @supervisord_minprocs -%>
-minprocs=<%= @supervisord_minprocs %>
-<% end -%>
-<% if @supervisord_nocleanup -%>
-nocleanup=<%= @supervisord_nocleanup %>
-<% end -%>
-<% if @supervisord_childlogdir -%>
-childlogdir=<%= @supervisord_childlogdir %>
-<% end -%>
-<% if @supervisord_user -%>
-user=<%= @supervisord_user %>
-<% end -%>
-<% if @supervisord_directory -%>
-directory=<%= @supervisord_directory %>
-<% end -%>
-<% if @supervisord_strip_ansi -%>
-strip_ansi=<%= @supervisord_strip_ansi %>
-<% end -%>
-<% if @supervisord_environment -%>
-environment=<%= @supervisord_environment %>
-<% end -%>
-<% if @supervisord_identifier -%>
-identifier=<%= @supervisord_identifier %>
+<% if @supervisord_logfile -%>logfile=<%= @supervisord_logfile %>
+<% end -%><% if @supervisord_logfile_maxbytes -%>logfile_maxbytes=<%= @supervisord_logfile_maxbytes %>
+<% end -%><% if @supervisord_logfile_backups -%>logfile_backups=<%= @supervisord_logfile_backups %>
+<% end -%><% if @supervisord_loglevel -%>loglevel=<%= @supervisord_loglevel %>
+<% end -%><% if @supervisord_pidfile -%>pidfile=<%= @supervisord_pidfile %>
+<% end -%><% if @supervisord_umask -%>umask=<%= @supervisord_umask %>
+<% end -%><% if @supervisord_nodaemon -%>nodaemon=<%= @supervisord_nodaemon %>
+<% end -%><% if @supervisord_minfds -%>minfds=<%= @supervisord_minfds %>
+<% end -%><% if @supervisord_minprocs -%>minprocs=<%= @supervisord_minprocs %>
+<% end -%><% if @supervisord_nocleanup -%>nocleanup=<%= @supervisord_nocleanup %>
+<% end -%><% if @supervisord_childlogdir -%>childlogdir=<%= @supervisord_childlogdir %>
+<% end -%><% if @supervisord_user -%>user=<%= @supervisord_user %>
+<% end -%><% if @supervisord_directory -%>directory=<%= @supervisord_directory %>
+<% end -%><% if @supervisord_strip_ansi -%>strip_ansi=<%= @supervisord_strip_ansi %>
+<% end -%><% if @supervisord_environment -%>environment=<%= @supervisord_environment %>
+<% end -%><% if @supervisord_identifier -%>identifier=<%= @supervisord_identifier %>
 <% end -%>
 # EOF
+
+[supervisorctl]
+<% if @supervisorctl_serverurl -%>serverurl=<%= @supervisorctl_serverurl %>
+<% end -%><% if @supervisorctl_username -%>username=<%= @supervisorctl_username %>
+<% end -%><% if @supervisorctl_password -%>password=<%= @supervisorctl_password %>
+<% end -%><% if @supervisorctl_prompt -%>prompt=<%= @supervisorctl_prompt %>
+<% end -%><% if @supervisorctlhistory_file -%>history_file=<%= @supervisorctl_history_file %>
+<% end -%>
+# EOF
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[include]
+files = /etc/supervisor/conf.d/*.conf

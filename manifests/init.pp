@@ -42,9 +42,7 @@ class supervisor (
   $supervisorctl_promt          = undef,
   $supervisorctl_history_file   = undef,
   # Daemon options.
-  $supervisor_sysconfog_options = undef) {
-  # Include supervisor::params
-  include supervisor::params
+  $supervisor_sysconfog_options = undef) inherits supervisor::params {
 
   $supervisor_package_name = $supervisor::params::supervisor_package_name
   $supervisor_service_name = $supervisor::params::supervisor_service_name
@@ -58,18 +56,9 @@ class supervisor (
     $supervisor::params::supervisor_sysconfig_options
   }
 
-  package { $supervisor_package_name:
-    ensure => $ensure,
-    provider => "pip",
-  } -> file { "/etc/init.d/supervisord":
-    ensure => $ensure,
-    mode => '0770',
-    content => template("supervisor/service.erb")
-  } -> service { $supervisor_service_name:
-    ensure => $ensure ? {
-      'present' => running,
-      'absent' => stopped
-    }
+  file { $supervisor_etc_dir:
+    ensure  => directory,
+    mode    => '0755'
   }
 
   file { $supervisor_sysconfig:
@@ -77,26 +66,43 @@ class supervisor (
     path    => $supervisor_sysconfig,
     mode    => '0644',
     content => template('supervisor/supervisord.conf.erb'),
-    require => Package[$supervisor_package_name],
-    notify  => Service[$supervisor_service_name],
-  } -> file { $supervisor_conf_dir:
-    ensure  => directory,
-    mode    => '0755',
-    require => Package[$supervisor_package_name],
-    notify  => Service[$supervisor_service_name],
-  } -> file { $supervisor_log_dir:
-    ensure  => directory,
-    mode    => '0755',
-    require => Package[$supervisor_package_name],
-    notify  => Service[$supervisor_service_name],
+    require => File[$supervisor_etc_dir]
   }
 
-  if ($supervisor_etc_dir) {
-    file { $supervisor_etc_dir:
-      ensure  => directory,
-      mode    => '0755',
-      require => Package[$supervisor_package_name]
-    } -> File[$supervisor_conf_dir]
+  file { $supervisor_conf_dir:
+    ensure  => directory,
+    mode    => '0755',
+    require => File[$supervisor_etc_dir]
+  }
+
+  file { $supervisor_log_dir:
+    ensure  => directory,
+    mode    => '0755',
+  }
+
+  package { $supervisor_package_name:
+    ensure => $ensure,
+    provider => "pip",
+    require => [Package["python-pip"], File[$supervisor_conf_dir], File[$supervisor_sysconfig]]
+  } -> file { "/lib/systemd/system/${supervisor_service_name}":
+    ensure => $ensure,
+    mode => '0770',
+    content => template("supervisor/service.erb")
+  } ~>
+  exec { "${supervisor_service_name}-systemd-reload":
+    command     => 'systemctl daemon-reload',
+    path        => [ '/usr/bin', '/bin', '/usr/sbin' ],
+    refreshonly => true,
+  }
+
+  service { $supervisor_service_name:
+    ensure => $ensure ? {
+      'present' => running,
+      'absent' => stopped
+    },
+    provider => systemd,
+    enable => true,
+    require => File["/lib/systemd/system/${supervisor_service_name}"]
   }
 
   # 01-unix_http_server.conf

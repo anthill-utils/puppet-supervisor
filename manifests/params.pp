@@ -4,7 +4,7 @@
 #
 class supervisor::params {
   $supervisor_package_name      = 'supervisor'
-  $supervisor_service_name      = 'supervisord'
+  $supervisor_service_name      = 'supervisord.service'
   $supervisor_log_dir           = '/var/log/supervisor'
   $supervisor_etc_dir           = '/etc/supervisor'
   $supervisor_conf_dir          = '/etc/supervisor/conf.d'

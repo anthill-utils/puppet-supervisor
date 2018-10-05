@@ -49,8 +49,8 @@ define supervisor::program (
     path    => "${supervisor_conf_dir}/${name}.conf",
     mode    => $program_conf_persmissions,
     content => template('supervisor/program.conf.erb'),
-    require => [Package[$supervisor_package_name], File[$supervisor_conf_dir]],
     notify  => Service[$supervisor_service_name],
+    require  => Package[$supervisor_package_name]
   }
 
   exec { "supervisorctl restart ${name}":

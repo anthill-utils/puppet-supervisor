@@ -4,6 +4,8 @@
 #
 class supervisor (
   $ensure                       = 'present',
+  $manage_package               = true,
+  $supervisor_bin_path          = '/usr/local/bin',
   # Defaults for [unix_http_server] section.
   $unix_http_server             = true,
   $unix_http_server_file        = '/var/run/supervisor.sock',
@@ -80,11 +82,7 @@ class supervisor (
     mode    => '0755',
   }
 
-  package { $supervisor_package_name:
-    ensure => $ensure,
-    provider => "pip",
-    require => [Package["python-pip"], File[$supervisor_conf_dir], File[$supervisor_sysconfig]]
-  } -> file { "/lib/systemd/system/${supervisor_service_name}":
+  file { "/lib/systemd/system/${supervisor_service_name}":
     ensure => $ensure,
     mode => '0770',
     content => template("supervisor/service.erb")
@@ -93,6 +91,15 @@ class supervisor (
     command     => 'systemctl daemon-reload',
     path        => [ '/usr/bin', '/bin', '/usr/sbin' ],
     refreshonly => true,
+  }
+
+  if ($manage_package)
+  {
+    package { $supervisor_package_name:
+      ensure => $ensure,
+      provider => "pip",
+      require => [Package["python-pip"], File[$supervisor_conf_dir], File[$supervisor_sysconfig]]
+    } -> File["/lib/systemd/system/${supervisor_service_name}"]
   }
 
   service { $supervisor_service_name:
@@ -113,10 +120,13 @@ class supervisor (
       path    => "${supervisor_conf_dir}/01-unix_http_server.conf",
       mode    => '0644',
       content => template('supervisor/unix_http_server.conf.erb'),
-      require => [
-        Package[$supervisor_package_name],
-        File[$supervisor_conf_dir]],
+      require => File[$supervisor_conf_dir],
       notify  => Service[$supervisor_service_name],
+    }
+
+    if ($manage_package)
+    {
+      Package[$supervisor_package_name] -> File["${supervisor_conf_dir}/02-inet_http_server.conf"]
     }
   }
 
@@ -128,10 +138,13 @@ class supervisor (
       path    => "${supervisor_conf_dir}/02-inet_http_server.conf",
       mode    => '0644',
       content => template('supervisor/inet_http_server.conf.erb'),
-      require => [
-        Package[$supervisor_package_name],
-        File[$supervisor_conf_dir]],
+      require => File[$supervisor_conf_dir],
       notify  => Service[$supervisor_service_name],
+    }
+
+    if ($manage_package)
+    {
+      Package[$supervisor_package_name] -> File["${supervisor_conf_dir}/02-inet_http_server.conf"]
     }
   }
 

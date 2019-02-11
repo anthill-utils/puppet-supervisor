@@ -49,11 +49,15 @@ define supervisor::program (
     path    => "${supervisor_conf_dir}/${name}.conf",
     mode    => $program_conf_persmissions,
     content => template('supervisor/program.conf.erb'),
-    notify  => Service[$supervisor_service_name],
-    require  => Package[$supervisor_package_name]
+    notify  => Service[$supervisor_service_name]
   }
 
-  exec { "supervisorctl restart ${name}":
+  if ($supervisor::manage_package)
+  {
+    File["${supervisor_conf_dir}/${name}.conf"] -> Package[$supervisor_package_name]
+  }
+
+  exec { "supervisorctl restart '${name}:*'":
     refreshonly => true,
     path => [ '/bin', '/usr/bin', '/usr/sbin', '/usr/local/bin' ]
   }

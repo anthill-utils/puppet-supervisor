@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStart=/usr/local/bin/supervisord -c /etc/supervisor/supervisord.conf
+ExecStart=<%=  @supervisor_bin_path %>/supervisord -c /etc/supervisor/supervisord.conf
 ExecReload=/usr/bin/supervisorctl reload
 ExecStop=/usr/bin/supervisorctl shutdown
 

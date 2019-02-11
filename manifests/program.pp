@@ -57,7 +57,7 @@ define supervisor::program (
     File["${supervisor_conf_dir}/${name}.conf"] -> Package[$supervisor_package_name]
   }
 
-  exec { "supervisorctl restart '${name}:*'":
+  exec { "${supervisor::supervisor_bin_path}/supervisorctl restart '${name}:*'":
     refreshonly => true,
     path => [ '/bin', '/usr/bin', '/usr/sbin', '/usr/local/bin' ]
   }
